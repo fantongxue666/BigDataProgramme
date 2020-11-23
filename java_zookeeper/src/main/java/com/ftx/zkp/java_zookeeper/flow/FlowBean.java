@@ -14,7 +14,14 @@ import java.io.IOException;
  * @Description TODO
  * @createTime 2020年11月20日 14:23:00
  */
-public class FlowBean implements Writable {
+public class FlowBean implements WritableComparable<FlowBean> {
+
+    //排序方法
+    @Override
+    public int compareTo(FlowBean flowBean) {
+        return flowBean.getUpFlow()-this.upFlow;
+    }
+
     //序列化
     @Override
     public void write(DataOutput dataOutput) throws IOException {
