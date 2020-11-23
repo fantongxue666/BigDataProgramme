@@ -1,8 +1,8 @@
 package com.ftx.zkp.java_zookeeper.flow;
 
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-import javax.xml.soap.Text;
 import java.io.IOException;
 
 /**
@@ -12,7 +12,7 @@ import java.io.IOException;
  * @Description TODO
  * @createTime 2020年11月20日 14:35:00
  */
-public class FlowReducer extends Reducer<Text,FlowBean,Text,FlowBean> {
+public class FlowReducer extends Reducer<Text,FlowBean, Text,FlowBean> {
 
     @Override
     protected void reduce(Text key, Iterable<FlowBean> values, Context context) throws IOException, InterruptedException {
@@ -34,6 +34,7 @@ public class FlowReducer extends Reducer<Text,FlowBean,Text,FlowBean> {
         flowBean.setUpCountFlow(upCountFlow);
         flowBean.setDownCountFlow(downCountFlow);
         //将K3和V3写入上下文
+        System.out.println("FlowReducer读取"+key.toString()+"手机号信息并写入context："+flowBean.toString());
         context.write(key,flowBean);
     }
 }

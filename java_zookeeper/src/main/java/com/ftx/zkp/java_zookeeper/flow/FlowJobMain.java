@@ -1,14 +1,10 @@
 package com.ftx.zkp.java_zookeeper.flow;
 
-import com.ftx.zkp.java_zookeeper.sort.SortBean;
-import com.ftx.zkp.java_zookeeper.sort.SortMapper;
-import com.ftx.zkp.java_zookeeper.sort.SortReducer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.LocalFileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
@@ -27,7 +23,7 @@ public class FlowJobMain extends Configured implements Tool {
     @Override
     public int run(String[] strings) throws Exception {
         //创建job对象
-        Job job = Job.getInstance(super.getConf(), "mapreduce_sort");
+        Job job = Job.getInstance(super.getConf());
         job.setInputFormatClass(TextInputFormat.class);
         Path path = new Path("file:///D:\\suibian\\input.txt");
         TextInputFormat.addInputPath(job,path);
@@ -41,7 +37,7 @@ public class FlowJobMain extends Configured implements Tool {
         job.setOutputValueClass(FlowBean.class);
         //设置输出类和输出路径
         job.setOutputFormatClass(TextOutputFormat.class);
-        Path path1 = new Path("file:///D:\\suibian\\mapreduce222\\output");
+        Path path1 = new Path("file:///D:\\suibian\\mapreduceqwertr");
         LocalFileSystem local = FileSystem.getLocal(new Configuration());
         if(local.exists(path1)){
             local.delete(path1,true);
@@ -55,6 +51,8 @@ public class FlowJobMain extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
         Configuration configuration=new Configuration();
+        System.setProperty("user.name","root");
+        System.setProperty("HADOOP_USER_NAME","root");
         //启动job任务
         int run = ToolRunner.run(configuration, new FlowJobMain(), args);
         System.exit(run);

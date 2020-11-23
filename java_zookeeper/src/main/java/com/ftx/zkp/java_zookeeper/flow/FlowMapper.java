@@ -23,12 +23,13 @@ public class FlowMapper extends Mapper<LongWritable, Text,Text,FlowBean> {
      */
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        String[] split = value.toString().split("\t");
+        String[] split = value.toString().split(",");
         FlowBean flowBean = new FlowBean();
-        flowBean.setUpFlow(Integer.parseInt(split[7]));
-        flowBean.setDownFlow(Integer.parseInt(split[8]));
-        flowBean.setUpCountFlow(Integer.parseInt(split[9]));
-        flowBean.setDownCountFlow(Integer.parseInt(split[10]));
-        context.write(new Text(split[1]),flowBean);
+        flowBean.setUpFlow(Integer.parseInt(split[1]));
+        flowBean.setDownFlow(Integer.parseInt(split[2]));
+        flowBean.setUpCountFlow(Integer.parseInt(split[3]));
+        flowBean.setDownCountFlow(Integer.parseInt(split[4]));
+        System.out.println("FlowMap读取"+split[0]+"手机号信息并写入context："+flowBean.toString());
+        context.write(new Text(split[0]),flowBean);
     }
 }
