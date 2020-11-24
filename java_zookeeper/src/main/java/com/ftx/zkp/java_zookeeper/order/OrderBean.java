@@ -28,9 +28,12 @@ public class OrderBean implements WritableComparable<OrderBean> {
     }
     //指定排序规则
     @Override
-    public int compareTo(OrderBean o) {
+    public int compareTo(OrderBean orderBean) {
         //先比较订单id，如果订单id一样，则排序订单金额（降序）
-
+        int i = this.orderId.compareTo(orderBean.getOrderId());
+        if(i==0){
+             i = (this.price.compareTo(orderBean.getPrice()))*(-1);
+        }
         return 0;
     }
 
